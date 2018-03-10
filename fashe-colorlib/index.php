@@ -1,3 +1,7 @@
+<script>
+  window.loaction.reload(true);
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +55,7 @@
 				</div>
 
 				<span class="topbar-child1">
-					Free shipping for standard order over $100
+					¡Envío gratis en toda la ciudad!
 				</span>
 
 				<div class="topbar-child2">
@@ -70,7 +74,7 @@
 
 			<div class="wrap_header">
 				<!-- Logo -->
-				<a href="index.html" class="logo">
+				<a href="index.php" class="logo">
 					<img src="images/icons/logo.png" alt="IMG-LOGO">
 				</a>
 
@@ -79,9 +83,9 @@
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.html">Inicio</a>
+								<a href="index.php">Inicio</a>
 								<!-- <ul class="sub_menu">
-									<li><a href="index.html">Homepage V1</a></li>
+									<li><a href="index.php">Homepage V1</a></li>
 									<li><a href="home-02.html">Homepage V2</a></li>
 									<li><a href="home-03.html">Homepage V3</a></li>
 								</ul> -->
@@ -116,7 +120,8 @@
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
+					<a href="signin.php" class="header-wrapicon1 dis-block">
+            Inicia Sesión
 						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
 					</a>
 
@@ -206,7 +211,7 @@
 		<!-- Header Mobile -->
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
-			<a href="index.html" class="logo-mobile">
+			<a href="index.php" class="logo-mobile">
 				<img src="images/icons/logo.png" alt="IMG-LOGO">
 			</a>
 
@@ -214,7 +219,8 @@
 			<div class="btn-show-menu">
 				<!-- Header Icon mobile -->
 				<div class="header-icons-mobile">
-					<a href="#" class="header-wrapicon1 dis-block">
+					<a href="signin.php" class="header-wrapicon1 dis-block">
+            Inicia sesión
 						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
 					</a>
 
@@ -343,9 +349,9 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
+						<a href="index.php">Home</a>
 						<ul class="sub-menu">
-							<li><a href="index.html">Homepage V1</a></li>
+							<li><a href="index.php">Homepage V1</a></li>
 							<li><a href="home-02.html">Homepage V2</a></li>
 							<li><a href="home-03.html">Homepage V3</a></li>
 						</ul>
@@ -384,58 +390,58 @@
 	<section class="slide1">
 		<div class="wrap-slick1">
 			<div class="slick1">
-				<div class="item-slick1 item1-slick1" style="background-image: url(images/master-slide-02.jpg);">
+				<div class="item-slick1 item1-slick1" style="background-image: url(images/nike.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-							Women Collection 2018
+							Negocio de calidad
 						</span>
 
 						<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-							New arrivals
+							Nueva Temporada
 						</h2>
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="zoomIn">
 							<!-- Button -->
 							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
-								Shop Now
+								Compra ahora!
 							</a>
 						</div>
 					</div>
 				</div>
 
-				<div class="item-slick1 item2-slick1" style="background-image: url(images/master-slide-03.jpg);">
+				<div class="item-slick1 item2-slick1" style="background-image: url(images/adidas.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
-							Women Collection 2018
+							Colección 2018
 						</span>
 
 						<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="lightSpeedIn">
-							New arrivals
+							Nueva Temporada
 						</h2>
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="slideInUp">
 							<!-- Button -->
 							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
-								Shop Now
+								Compra ahora!
 							</a>
 						</div>
 					</div>
 				</div>
 
-				<div class="item-slick1 item3-slick1" style="background-image: url(images/master-slide-04.jpg);">
+				<div class="item-slick1 item3-slick1" style="background-image: url(images/puma.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
-							Women Collection 2018
+							Nueva moda 2018
 						</span>
 
 						<h2 class="caption2-slide1 xl-text1 t-center animated visible-false m-b-37" data-appear="rotateInUpRight">
-							New arrivals
+							Lo mejor en calzado
 						</h2>
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="rotateIn">
 							<!-- Button -->
 							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
-								Shop Now
+								Compra ahora!
 							</a>
 						</div>
 					</div>

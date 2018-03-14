@@ -88,11 +88,6 @@
 						<ul class="main_menu">
 							<li>
 								<a href="index.php">Inicio</a>
-								<!-- <ul class="sub_menu">
-									<li><a href="index.php">Homepage V1</a></li>
-									<li><a href="home-02.html">Homepage V2</a></li>
-									<li><a href="home-03.html">Homepage V3</a></li>
-								</ul> -->
 							</li>
 
 							<li>
@@ -100,23 +95,23 @@
 							</li>
 
 							<li class="sale-noti">
-								<a href="product.php">Categorias</a>
+              Categorias
+								<!-- <a href="product.php">Categorias</a> -->
 							</li>
 
 							<li>
-								<a href="cart.html">Carrito</a>
+              Carrito
+								<!-- <a href="cart.html">Carrito</a> -->
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+              Sobre nosotros
+								<!-- <a href="about.html">Sobre nosotros</a> -->
 							</li>
 
 							<li>
-								<a href="about.html">Sobre nosotros</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contactanos</a>
+              Contactanos
+								<!-- <a href="contact.html">Contactanos</a> -->
 							</li>
 						</ul>
 					</nav>
@@ -603,21 +598,21 @@
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
+				swal(nameProduct, "agregado al carrito !", "success");
 			});
 		});
 
 		$('.block2-btn-addwishlist').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
+				swal(nameProduct, "agregado al carrito !", "success");
 			});
 		});
 
 		$('.btn-addcart-product-detail').each(function(){
 			var nameProduct = $('.product-detail-name').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
+				swal(nameProduct, "agregado al carrito !", "success");
 			});
 		});
 	</script>

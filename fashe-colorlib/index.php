@@ -606,9 +606,9 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.php?idProduct=<?php echo $row['id'];?>" class="block2-name dis-block s-text3 p-b-5">
-                  <h5><?php echo $row['name']; ?></h5>
-								</a>
+								<h5><a href="product-detail.php?idProduct=<?php echo $row['id'];?>" class="block2-name dis-block s-text3 p-b-5">
+                  <?php echo $row['name']; ?>
+								</a></h5>
 
 								<span class="block2-price m-text6 p-r-5">
                 $<?php echo $row['cost']; ?>
@@ -730,7 +730,7 @@
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
+				swal(nameProduct, "Agregado al carrito!", "success");
 			});
 		});
 

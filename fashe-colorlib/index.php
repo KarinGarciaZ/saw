@@ -101,27 +101,27 @@
 							</li>
 
 							<li>
-								<a href="product.html">Productos</a>
+								<a href="product.php">Productos</a>
 							</li>
 
 							<li class="sale-noti">
-								<a href="product.html">Categorias</a>
+              Categorias
+								<!-- <a href="product.php">Categorias</a> -->
 							</li>
 
 							<li>
-								<a href="cart.html">Carrito</a>
+              Carrito
+								<!-- <a href="cart.html">Carrito</a> -->
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
+              Sobre nosotros
+								<!-- <a href="about.html">Sobre nosotros</a> -->
 							</li>
 
 							<li>
-								<a href="about.html">Sobre nosotros</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contactanos</a>
+              Contactanos
+								<!-- <a href="contact.html">Contactanos</a> -->
 							</li>
 						</ul>
 					</nav>
@@ -130,9 +130,15 @@
 				<!-- Header Icon -->
 				<div class="header-icons">
 					<a href="signin.php" class="header-wrapicon1 dis-block">
-            Inicia Sesión
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
+            Crear cuenta | 
+          </a>
+
+          <a href="login.php" class="header-wrapicon1 dis-block">
+            Iniciar sesión
+            <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+          </a>
+          
+          
 
 					<span class="linedivide1"></span>
 
@@ -368,11 +374,11 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="product.php">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Sale</a>
+						<a href="product.php">Sale</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -411,7 +417,7 @@
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="zoomIn">
 							<!-- Button -->
-							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+							<a href="product.php" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
 								Compra ahora!
 							</a>
 						</div>
@@ -430,7 +436,7 @@
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="slideInUp">
 							<!-- Button -->
-							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+							<a href="product.php" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
 								Compra ahora!
 							</a>
 						</div>
@@ -449,7 +455,7 @@
 
 						<div class="wrap-btn-slide1 w-size1 animated visible-false" data-appear="rotateIn">
 							<!-- Button -->
-							<a href="product.html" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
+							<a href="product.php" class="flex-c-m size2 bo-rad-23 s-text2 bgwhite hov1 trans-0-4">
 								Compra ahora!
 							</a>
 						</div>
@@ -483,7 +489,7 @@
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
-							<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+							<a href="product.php?idCategory=<?php echo $row['id'];?>" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 <?php echo $row['nombre']; ?>
 							</a>
 						</div>
@@ -496,7 +502,7 @@
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
-							<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+							<a href="product.php?idCategory=<?php echo $row['id'];?>" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 <?php echo $row['nombre']; ?>
 							</a>
 						</div>
@@ -511,7 +517,7 @@
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
-							<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+							<a href="product.php?idCategory=<?php echo $row['id'];?>" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 <?php echo $row['nombre']; ?>
 							</a>
 						</div>
@@ -524,7 +530,7 @@
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
-							<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+							<a href="product.php?idCategory=<?php echo $row['id'];?>" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 <?php echo $row['nombre']; ?>
 							</a>
 						</div>
@@ -539,7 +545,7 @@
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
-							<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+							<a href="product.php?idCategory=<?php echo $row['id'];?>" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 <?php echo $row['nombre']; ?>
 							</a>
 						</div>
@@ -552,7 +558,7 @@
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
-							<a href="#" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
+							<a href="product.php?idCategory=<?php echo $row['id'];?>" class="flex-c-m size2 m-text2 bg3 hov1 trans-0-4">
                 <?php echo $row['nombre']; ?>
 							</a>
 						</div>
@@ -600,8 +606,8 @@
 							</div>
 
 							<div class="block2-txt p-t-20">
-								<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
-                <?php echo $row['name']; ?>
+								<a href="product-detail.php?idProduct=<?php echo $row['id'];?>" class="block2-name dis-block s-text3 p-b-5">
+                  <h5><?php echo $row['name']; ?></h5>
 								</a>
 
 								<span class="block2-price m-text6 p-r-5">

@@ -5,41 +5,16 @@
   $db="saw";
 
   $conexion=new mysqli($host_db,$usuario_db, $pass_db);
-  $conexion->set_charset("utf8");    
-
-  mysqli_select_db($conexion, "saw");    
-  if (@$_POST['name'] && $_POST['phone-number'] && $_POST['email'] && $_POST['address'] && $_POST['pass1'] && $_POST['pass2']) {
-    
-    $name = $_POST['name'];
-    $phone = $_POST['phone-number'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    $pass1 = $_POST['pass1'];
-    $pass2 = $_POST['pass2'];
-
-    
-
-    if ($pass1 == $pass2){
-      $consultaSQL="INSERT INTO `clients`(`username`, `password`, `email`, `address`, `phone`) VALUES('$name', '$pass1', '$email', '$address', '$phone');";
-      $resultados=mysqli_query($conexion,$consultaSQL);
-      if ($resultados){
-        echo "<script>alert('Insertado exitosamente');</script>";   
-        echo "<script>window.history.pushState('', '', 'index.php');</script>";  
-      } 
-      else
-        echo "<script>alert('Error al insertar');</script>";
-    }
-    else
-      echo "<script>alert('Contraseñas no coinsiden');</script>";
-  }
-?>
-
+  $conexion->set_charset("utf8"); 
+  mysqli_select_db($conexion, "saw");  
+  $idCategory = $_GET['idCategory'];
+  ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Registro</title>
+	<title>Product</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -64,6 +39,8 @@
 	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/noui/nouislider.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -110,44 +87,49 @@
 
 				<!-- Menu -->
 				<div class="wrap_menu">
-					<nav class="menu">
-						<ul class="main_menu">
-							<li>
-								<a href="index.php">Inicio</a>
-							</li>
+          <nav class="menu">
+            <ul class="main_menu">
+              <li>
+                <a href="index.php">Inicio</a>
+              </li>
 
-							<li>
-								<a href="product.php">Productos</a>
-							</li>
+              <li>
+                <a href="product.php">Productos</a>
+              </li>
 
-							<li class="sale-noti">
-								<a href="product.php">Categorias</a>
-							</li>
+              <li class="sale-noti">
+              Categorias
+                <!-- <a href="product.php">Categorias</a> -->
+              </li>
 
-							<li>
-								<a href="cart.html">Carrito</a>
-							</li>
+              <li>
+              Carrito
+                <!-- <a href="cart.html">Carrito</a> -->
+              </li>
 
-							<li>
-								<a href="blog.html">Blog</a>
-							</li>
+              <li>
+              Sobre nosotros
+                <!-- <a href="about.html">Sobre nosotros</a> -->
+              </li>
 
-							<li>
-								<a href="about.html">Sobre nosotros</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contactanos</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
+              <li>
+              Contactanos
+                <!-- <a href="contact.html">Contactanos</a> -->
+              </li>
+            </ul>
+          </nav>
+        </div>
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
+          <a href="signin.php" class="header-wrapicon1 dis-block">
+            Crear cuenta | 
+          </a>
+
+          <a href="login.php" class="header-wrapicon1 dis-block">
+            Iniciar sesión
+            <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+          </a>
 
 					<span class="linedivide1"></span>
 
@@ -409,60 +391,119 @@
 		</div>
 	</header>
 
-	<!-- Title Page -->
-	<!-- <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-06.jpg);">
-		<h2 class="l-text2 t-center">
-			Contact
-		</h2>
-	</section> -->
-
-	<!-- content page -->
-	<section class="bgwhite p-t-66 p-b-60">
+	<!-- Content page -->
+	<section class="bgwhite p-t-55 p-b-65">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-3 p-b-30">
-					<!-- <div class="p-r-20 p-r-0-lg">
-						<div class="contact-map size21" id="google_map" data-map-x="40.614439" data-map-y="-73.926781" data-pin="images/icons/icon-position-map.png" data-scrollwhell="0" data-draggable="1"></div>
-					</div> -->
-				</div>
-
-				<div class="col-md-6 p-b-30">
-					<form class="leave-comment" action="signin.php" method="post">
-						<h4 class="m-text26 p-b-36 p-t-15">
-							¡Registrate!
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
+					<div class="leftbar p-r-20 p-r-0-sm">
+						<!--  -->
+						<h4 class="m-text14 p-b-7">
+              Categorias
 						</h4>
 
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" placeholder="Nombre Completo">
-						</div>
-
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Teléfono">
-						</div>
-
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="email" placeholder="Email">
-						</div>
-
-            <div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="address" placeholder="Dirección">
-            </div>
+						<ul class="p-b-54">
             
-            <div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="pass1" placeholder="Contraseña">
-            </div>
-            
-            <div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="pass2" placeholder="Confirmar Contraseña">
+              <?php
+              foreach ($conexion->query('SELECT * FROM `categorias`;') as $row){ ?> 
+                <li class="p-t-4">
+                  <a href="product.php?idCategory=<?php echo $row['id'];?>" class="s-text13 active1">
+                    <?php echo $row['nombre']; ?>
+                  </a>
+                </li>		
+              <?php } ?>
+						</ul>
+
+						<!--  -->
+						<h4 class="m-text14 p-b-32">
+							Filtros
+						</h4>
+
+						<div class="filter-price p-t-22 p-b-50 bo3">
+							<div class="m-text15 p-b-17">
+								Precio
+							</div>
+
+							<div class="wra-filter-bar">
+								<div id="filter-bar"></div>
+							</div>
+
+							<div class="flex-sb-m flex-w p-t-16">
+								<div class="w-size11">
+									<!-- Button -->
+									<button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
+										Filtrar
+									</button>
+								</div>
+
+								<div class="s-text3 p-t-10 p-b-10">
+									Rango: $<span id="value-lower">610</span> - $<span id="value-upper">980</span>
+								</div>
+							</div>
 						</div>
-						
-						<div class="w-size25">
-							<!-- Button -->
-							<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
-								Registrar
+
+						<div class="search-product pos-relative bo4 of-hidden">
+							<input class="s-text7 size6 p-l-23 p-r-50" type="text" name="search-product" placeholder="Buscar productos...">
+
+							<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
 							</button>
 						</div>
-					</form>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-md-8 col-lg-9 p-b-50"> 
+
+					<!-- Product -->
+					<div class="row">
+          <?php 
+            if($idCategory)
+              $query = "SELECT * from `products` WHERE idCategory = ".$idCategory." ORDER BY RAND() LIMIT 0,12;";             
+            else
+              $query = "SELECT * from `products` ORDER BY RAND() LIMIT 0,12;";              
+            foreach ($conexion->query($query) as $row){ ?> 
+						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+							<!-- Block2 -->
+							<div class="block2">
+								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
+                  <?php echo "<img src='../../saw-admin/images/products/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+
+									<div class="block2-overlay trans-0-4">
+										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+											<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
+											<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+										</a>
+
+										<div class="block2-btn-addcart w-size1 trans-0-4">
+											<!-- Button -->
+											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                        Agregar carrito
+											</button>
+										</div>
+									</div>
+								</div>
+
+								<div class="block2-txt p-t-20">
+									<a href="product-detail.php?idProduct=<?php echo $row['id'];?>" class="block2-name dis-block s-text3 p-b-5">
+                    <?php echo $row['name']; ?>
+									</a>
+
+									<span class="block2-price m-text6 p-r-5">
+									  $<?php echo $row['cost']; ?>
+									</span>
+								</div>
+							</div>
+            </div>
+          <?php } ?> 
+
+						
+					</div>
+
+					<!-- Pagination -->
+					<div class="pagination flex-m flex-w p-t-26">
+						<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
+						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -487,15 +528,15 @@
         <a href="#" class="fs-18 color1 p-r-20 fa fa-youtube-play"></a>
       </div>
     </div>
-		
+    
 
-		<div class="t-center p-l-15 p-r-15">	
-			<div class="t-center s-text8 p-t-20">
-				Copyright © 2018 Derechos reservados. | Aliados del Software.
-			</div>
-		</div>
+    <div class="t-center p-l-15 p-r-15">	
+      <div class="t-center s-text8 p-t-20">
+        Copyright © 2018 Derechos reservados. | Aliados del Software.
+      </div>
+    </div>
   </footer>
-  
+
 	<!-- Back to top -->
 	<div class="btn-back-to-top bg0-hov" id="myBtn">
 		<span class="symbol-btn-back-to-top">
@@ -530,9 +571,54 @@
 		});
 	</script>
 <!--===============================================================================================-->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
-  <!-- <script src="https://www.google.com/maps/@19.6998871,-103.4639284,17.78z?hl=es-419"></script> -->
-	<script src="js/map-custom.js"></script>
+	<script type="text/javascript" src="vendor/daterangepicker/moment.min.js"></script>
+	<script type="text/javascript" src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/slick/slick.min.js"></script>
+	<script type="text/javascript" src="js/slick-custom.js"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		$('.block2-btn-addcart').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "Agregado al carrito!", "success");
+			});
+		});
+
+		$('.block2-btn-addwishlist').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "Agregado a lista de deseos!", "success");
+			});
+		});
+	</script>
+
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/noui/nouislider.min.js"></script>
+	<script type="text/javascript">
+		/*[ No ui ]
+	    ===========================================================*/
+	    var filterBar = document.getElementById('filter-bar');
+
+	    noUiSlider.create(filterBar, {
+	        start: [ 50, 4000 ],
+	        connect: true,
+	        range: {
+	            'min': 0,
+	            'max': 5000
+	        }
+	    });
+
+	    var skipValues = [
+	    document.getElementById('value-lower'),
+	    document.getElementById('value-upper')
+	    ];
+
+	    filterBar.noUiSlider.on('update', function( values, handle ) {
+	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
+	    });
+	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 

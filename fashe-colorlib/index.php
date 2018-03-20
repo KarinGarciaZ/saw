@@ -1,7 +1,3 @@
-<script>
-  window.loaction.reload(true);
-</script>
-
 <?php
   
   $host_db="localhost";
@@ -13,6 +9,10 @@
   $conexion->set_charset("utf8");    
 
   mysqli_select_db($conexion, "saw");  
+  session_start();
+  $username = $_SESSION['username'];
+  $userId = $_SESSION['userId'];
+  $idCart = 0;
     
 ?>
 
@@ -72,18 +72,6 @@
 					¡Envío gratis en toda la ciudad!
 				</span>
 
-				<div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
-
-					<div class="topbar-language rs1-select2">
-						<select class="selection-1" name="time">
-							<option>USD</option>
-							<option>EUR</option>
-						</select>
-					</div>
-				</div>
 			</div>
 
 			<div class="wrap_header">
@@ -110,8 +98,7 @@
 							</li>
 
 							<li>
-              Carrito
-								<!-- <a href="cart.html">Carrito</a> -->
+								<a href="cart.php">Carrito</a>
 							</li>
 
 							<li>
@@ -129,96 +116,104 @@
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="signin.php" class="header-wrapicon1 dis-block">
-            Crear cuenta | 
-          </a>
+        <?php
+          if($username){
+            echo "<a href='' class='header-wrapicon1 dis-block'>$username<img src='images/icons/icon-header-01.png' class='header-icon1' alt='ICON'></a>";
+          }
+          else {?>
+            <a href="signin.php" class="header-wrapicon1 dis-block">
+              Crear cuenta | 
+            </a>
 
-          <a href="login.php" class="header-wrapicon1 dis-block">
-            Iniciar sesión
-            <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-          </a>
-          
-          
+            <a href="login.php" class="header-wrapicon1 dis-block">
+              Iniciar sesión
+              <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+            </a>
+        <?php 
+        } 
+
+          $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+          $lector = mysqli_query($conexion, $valores);
+        ?>		
+                    
 
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
+						<img src="images/icons/icon-header-03.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span id="itemsCart" class="header-icons-noti">
+              <?php
+                if ($lector){
+                  $row = mysqli_fetch_array($lector);
+                  $valores = "SELECT COUNT(*) from shopping_cart_details WHERE idShoppingCart = ".$row[0].";";
+                  $lector = mysqli_query($conexion, $valores);
+                  $row = mysqli_fetch_array($lector);
+                  echo $row[0];
+                }
+                else
+                  echo 0;
+              ?>
+            </span>
 
-						<!-- Header cart noti -->
+            <!-- Header cart noti -->
+            <?php if($username) {
+              $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+              $lector = mysqli_query($conexion, $valores);
+              if ($lector){
+                $total = 0;
+                $row = mysqli_fetch_array($lector);                        
+              ?>
+              
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
+                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].';') as $row){    
+                  $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
+                  $lectore = mysqli_query($conexion, $valores);
+                  $productRow = mysqli_fetch_array($lectore);
+                  ?>
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
+                  <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG'>";?> 
 									</div>
 
 									<div class="header-cart-item-txt">
 										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+                    <?php echo $productRow['name']; ?>
 										</a>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
+                    <?php echo $row['quantity']; ?> x $<?php echo $row['cost']; ?>
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
+                </li>		
+                <?php $total = $total + $row['cost'] * $row['quantity']; }?>						
 							</ul>
 
 							<div class="header-cart-total">
-								Total: $75.00
+								Total: $<?php echo $total;?>		
 							</div>
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Ver Carro
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
 									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
+										Pagar
 									</a>
 								</div>
 							</div>
-						</div>
+            </div>
+            <?php } }?>
+
 					</div>
+          </div>
+
 				</div>
 			</div>
 		</div>
@@ -304,7 +299,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -382,7 +377,7 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="cart.php">Features</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -597,10 +592,14 @@
 									</a>
 
 									<div class="block2-btn-addcart w-size1 trans-0-4">
-										<!-- Button -->
-										<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+                    <!-- Button -->
+                    <?php if($username) {?>
+										<button id="addCar" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
 											Agregar carrito
-										</button>
+                    </button>
+                    <?php } else {?>
+                      <a href="login.php" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">Agregar carrito</a>
+                    <?php } ?>
 									</div>
 								</div>
 							</div>
@@ -608,10 +607,12 @@
 							<div class="block2-txt p-t-20">
 								<h5><a href="product-detail.php?idProduct=<?php echo $row['id'];?>" class="block2-name dis-block s-text3 p-b-5">
                   <?php echo $row['name']; ?>
-								</a></h5>
+                </a></h5>
 
-								<span class="block2-price m-text6 p-r-5">
-                $<?php echo $row['cost']; ?>
+                <span class="block2-id" style="opacity: 0;"><?php echo $row['id']; ?></span>
+                <span>$</span>
+                <span class="block2-price m-text6 p-r-5">
+                <?php echo $row['cost']; ?>
 								</span>
 							</div>
 						</div>
@@ -657,7 +658,9 @@
         </span>
       </div>
 		</div>
-	</section>
+  </section>
+  
+  
 
 
 	<!-- Footer -->
@@ -700,8 +703,6 @@
 	<!-- Container Selection1 -->
 	<div id="dropDownSelect1"></div>
 
-
-
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
@@ -726,20 +727,38 @@
 	<script type="text/javascript" src="vendor/lightbox2/js/lightbox.min.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script type="text/javascript">
+  <script type="text/javascript">
+  
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+      var idProduct = $(this).parent().parent().parent().find('.block2-id').html();
+      var costProduct = $(this).parent().parent().parent().find('.block2-price').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "Agregado al carrito!", "success");
+				swal(nameProduct, "Agregado al carrito!", "success");    
+        
+        loadCart(idProduct, costProduct);
 			});
 		});
 
 		$('.block2-btn-addwishlist').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();     
 			$(this).on('click', function(){
 				swal(nameProduct, "is added to wishlist !", "success");
 			});
 		});
+
+    function loadCart(idProduct, costProduct){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'getCountCart.php?id='+idProduct+'&cost='+costProduct, true);
+
+      xhr.onload = function(){
+        var span = document.getElementById("itemsCart");
+        span.textContent = this.responseText;
+      }
+
+      xhr.send();
+    }
+
 	</script>
 
 

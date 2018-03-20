@@ -8,6 +8,9 @@
   $conexion->set_charset("utf8"); 
   mysqli_select_db($conexion, "saw");  
   $idCategory = $_GET['idCategory'];
+
+  session_start();
+  $username = $_SESSION['username'];
   ?>
 
 
@@ -65,18 +68,6 @@
 					¡Envío gratis en toda la ciudad!
 				</span>
 
-				<div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
-
-					<div class="topbar-language rs1-select2">
-						<select class="selection-1" name="time">
-							<option>USD</option>
-							<option>EUR</option>
-						</select>
-					</div>
-				</div>
 			</div>
 
 			<div class="wrap_header">
@@ -104,7 +95,7 @@
 
               <li>
               Carrito
-                <!-- <a href="cart.html">Carrito</a> -->
+                <!-- <a href="cart.php">Carrito</a> -->
               </li>
 
               <li>
@@ -122,14 +113,20 @@
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-          <a href="signin.php" class="header-wrapicon1 dis-block">
-            Crear cuenta | 
-          </a>
+        <?php
+          if($username){
+            echo "<a href='' class='header-wrapicon1 dis-block'>$username<img src='images/icons/icon-header-01.png' class='header-icon1' alt='ICON'></a>";
+          }
+          else {?>
+            <a href="signin.php" class="header-wrapicon1 dis-block">
+              Crear cuenta | 
+            </a>
 
-          <a href="login.php" class="header-wrapicon1 dis-block">
-            Iniciar sesión
-            <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-          </a>
+            <a href="login.php" class="header-wrapicon1 dis-block">
+              Iniciar sesión
+              <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+            </a>
+        <?php } ?>	
 
 					<span class="linedivide1"></span>
 
@@ -196,7 +193,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -294,7 +291,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -372,7 +369,7 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="cart.php">Features</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -475,10 +472,14 @@
 										</a>
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
-											<!-- Button -->
+                      <!-- Button -->
+                      <?php if($username) {?>
 											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
                         Agregar carrito
-											</button>
+                      </button>
+                      <?php } else {?>
+                        <a href="login.php" class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">Agregar carrito</a>
+                      <?php } ?>
 										</div>
 									</div>
 								</div>

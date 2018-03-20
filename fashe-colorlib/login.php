@@ -7,7 +7,9 @@
   $conexion=new mysqli($host_db,$usuario_db, $pass_db);
   $conexion->set_charset("utf8");    
 
-  mysqli_select_db($conexion, "saw");    
+  mysqli_select_db($conexion, "saw");   
+  
+  session_destroy();
   if (@$_POST['email'] && $_POST['pass1']) {
     
     $email = $_POST['email'];
@@ -18,11 +20,15 @@
     $row = mysqli_fetch_array($resultados);
     
     if ($row['email'] == $email){
-      echo "<script>alert('Insertado exitosamente');</script>";   
+      session_start();
+      $_SESSION['username']  = $row['username'];
+      $_SESSION['email']  = $row['email']; 
+      $_SESSION['userId']  = $row['id']; 
       echo "<script>window.history.pushState('', '', 'index.php');</script>";  
+      echo "<script>location.reload();</script>"; 
     } 
     else
-      echo "<script>alert('Error al insertar');</script>";
+      echo "<script>alert('Cuenta no existe');</script>";
       
     }
 ?>
@@ -81,18 +87,6 @@
             ¡Envío gratis en toda la ciudad!
           </span>
 
-          <div class="topbar-child2">
-            <span class="topbar-email">
-              fashe@example.com
-            </span>
-
-            <div class="topbar-language rs1-select2">
-              <select class="selection-1" name="time">
-                <option>USD</option>
-                <option>EUR</option>
-              </select>
-            </div>
-          </div>
         </div>
 
         <div class="wrap_header">
@@ -118,7 +112,7 @@
                 </li>
 
                 <li>
-                  <a href="cart.html">Carrito</a>
+                  <a href="cart.php">Carrito</a>
                 </li>
 
                 <li>
@@ -207,7 +201,7 @@
                 <div class="header-cart-buttons">
                   <div class="header-cart-wrapbtn">
                     <!-- Button -->
-                    <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                    <a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
                       View Cart
                     </a>
                   </div>
@@ -305,7 +299,7 @@
                 <div class="header-cart-buttons">
                   <div class="header-cart-wrapbtn">
                     <!-- Button -->
-                    <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                    <a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
                       View Cart
                     </a>
                   </div>
@@ -383,7 +377,7 @@
             </li>
 
             <li class="item-menu-mobile">
-              <a href="cart.html">Features</a>
+              <a href="cart.php">Features</a>
             </li>
 
             <li class="item-menu-mobile">

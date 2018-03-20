@@ -8,6 +8,8 @@
   $conexion->set_charset("utf8"); 
   mysqli_select_db($conexion, "saw");  
   $idProduct = $_GET['idProduct'];
+  session_start();
+  $username = $_SESSION['username'];
   ?>
 
 <!DOCTYPE html>
@@ -62,18 +64,6 @@
 					¡Envío gratis en toda la ciudad!
 				</span>
 
-				<div class="topbar-child2">
-					<span class="topbar-email">
-						fashe@example.com
-					</span>
-
-					<div class="topbar-language rs1-select2">
-						<select class="selection-1" name="time">
-							<option>USD</option>
-							<option>EUR</option>
-						</select>
-					</div>
-				</div>
 			</div>
 
 			<div class="wrap_header">
@@ -101,7 +91,7 @@
 
 							<li>
               Carrito
-								<!-- <a href="cart.html">Carrito</a> -->
+								<!-- <a href="cart.php">Carrito</a> -->
 							</li>
 
 							<li>
@@ -119,9 +109,20 @@
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
+          <?php
+            if($username){
+              echo "<a href='' class='header-wrapicon1 dis-block'>$username<img src='images/icons/icon-header-01.png' class='header-icon1' alt='ICON'></a>";
+            }
+            else {?>
+              <a href="signin.php" class="header-wrapicon1 dis-block">
+                Crear cuenta | 
+              </a>
+
+              <a href="login.php" class="header-wrapicon1 dis-block">
+                Iniciar sesión
+                <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+              </a>
+          <?php } ?>	
 
 					<span class="linedivide1"></span>
 
@@ -188,7 +189,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -286,7 +287,7 @@
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
@@ -364,7 +365,7 @@
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="cart.php">Features</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -511,7 +512,7 @@
 
 							<div class="block2-txt p-t-20">
 								<a href="product-detail.php?idProduct=<?php echo $row['id'];?>" class="block2-name dis-block s-text3 p-b-5">
-                  <h5><?php echo $row['name']; ?></h5>
+                  <?php echo $row['name']; ?>
 								</a>
 
 								<span class="block2-price m-text6 p-r-5">

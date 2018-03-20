@@ -393,6 +393,17 @@
 	<!-- Cart -->
 	<section class="cart bgwhite p-t-70 p-b-100">
 		<div class="container">
+    <?php 
+      $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+      $lector = mysqli_query($conexion, $valores);
+      if($username) {
+        $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+        $lector = mysqli_query($conexion, $valores);
+        if ($lector){
+          $total = 0;
+          $row = mysqli_fetch_array($lector); 
+          ?>
+
 			<!-- Cart item -->
 			<div class="container-table-cart pos-relative">
 				<div class="wrap-table-shopping-cart bgwhite">
@@ -402,43 +413,53 @@
 							<th class="column-2">Producto</th>
 							<th class="column-3">Precio</th>
 							<th class="column-4 p-l-70">Cantidad</th>
-							<th class="column-5">Total</th>
-						</tr>
+              <th class="column-5">Total</th>
+              <th class="column-5">Remover Producto</th>
+            </tr>
+            
+            <?php
+              foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].';') as $row){    
+                $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
+                $lectore = mysqli_query($conexion, $valores);
+                $productRow = mysqli_fetch_array($lectore);
+            ?>	
 
 						<tr class="table-row">
 							<td class="column-1">
 								<div class="cart-img-product b-rad-4 o-f-hidden">
-									<img src="images/item-10.jpg" alt="IMG-PRODUCT">
+                <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG-PRODUCT'>";?> 
 								</div>
 							</td>
-							<td class="column-2">Men Tshirt</td>
-							<td class="column-3">$36.00</td>
+							<td class="column-2"><?php echo $productRow['name']; ?></td>
+							<td class="column-3">$<?php echo $row['cost']; ?></td>
 							<td class="column-4">
 								<div class="flex-w bo5 of-hidden w-size17">
 									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-									</button>
-
-									<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="1">
-
-									<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
+                  </button>
+                  
+                  <?php echo "<input class='size8 m-text18 t-center num-product' type='number' name='num-product1' value='".$row['quantity']."'>"; ?>
+                  <?php $total = $total + $row['cost'] * $row['quantity']; ?>
+                  
+                  <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 									</button>
 								</div>
 							</td>
-							<td class="column-5">$36.00</td>
+							<td class="column-5">$<?php echo $row['cost'] * $row['quantity']; }?></td>
 						</tr>
 						
 					</table>
 				</div>
-			</div>
+      </div>
+      
 
 			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">			
 
 				<div class="size10 trans-0-4 m-t-10 m-b-10">
 					<!-- Button -->
 					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-						Actualizar Carrito
+						Actualizar Valores
 					</button>
 				</div>
 			</div>
@@ -456,7 +477,7 @@
 					</span>
 
 					<span class="m-text21 w-size20 w-full-sm">
-						$39.00
+						$<?php echo $total * .84;?>	
 					</span>
 				</div>
 
@@ -497,7 +518,7 @@
 					</span>
 
 					<span class="m-text21 w-size20 w-full-sm">
-						$39.00
+						$<?php echo $total;?>	
 					</span>
 				</div>
 
@@ -507,7 +528,8 @@
 						Proceder a Pagar
 					</button>
 				</div>
-			</div>
+      </div>
+      <?php } }?>
 		</div>
 	</section>
 
@@ -519,7 +541,7 @@
 
     <div>
       <p class="s-text7 text-center">
-        ¿Alguna duda? haznosla saber. Estamos en la ezquina entre Reforma y Ramón Corona, en el piso 3. Ciudad Guzmá, Jalisco.
+        ¿Alguna duda? haznosla saber. Estamos en la esquina entre Reforma y Ramón Corona, en el piso 3. Ciudad Guzmá, Jalisco.
       </p>
 
       <div class="text-center">

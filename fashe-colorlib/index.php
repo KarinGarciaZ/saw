@@ -145,10 +145,11 @@
               <?php
                 if ($lector){
                   $row = mysqli_fetch_array($lector);
-                  $valores = "SELECT COUNT(*) from shopping_cart_details WHERE idShoppingCart = ".$row[0].";";
-                  $lector = mysqli_query($conexion, $valores);
-                  $row = mysqli_fetch_array($lector);
-                  echo $row[0];
+                  $total = 0;
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){          
+                    $total = $total + $row['quantity'];
+                  }                  
+                  echo $total;
                 }
                 else
                   echo 0;
@@ -166,7 +167,7 @@
               
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
-                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].';') as $row){    
+                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){    
                   $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
                   $lectore = mysqli_query($conexion, $valores);
                   $productRow = mysqli_fetch_array($lectore);
@@ -177,7 +178,7 @@
 									</div>
 
 									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
+										<a href="product-detail.php?idProduct=<?php echo $row['idProduct'];?>" class="header-cart-item-name">
                     <?php echo $productRow['name']; ?>
 										</a>
 
@@ -400,7 +401,7 @@
 	<section class="slide1">
 		<div class="wrap-slick1">
 			<div class="slick1">
-				<div class="item-slick1 item1-slick1" style="background-image: url(images/nike.jpg);">
+				<div class="item-slick1 item1-slick1" style="background-image: url(images/puma.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
 							Negocio de calidad
@@ -419,7 +420,7 @@
 					</div>
 				</div>
 
-				<div class="item-slick1 item2-slick1" style="background-image: url(images/adidas.jpg);">
+				<div class="item-slick1 item2-slick1" style="background-image: url(images/nike4.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rollIn">
 							Colección 2018
@@ -438,7 +439,7 @@
 					</div>
 				</div>
 
-				<div class="item-slick1 item3-slick1" style="background-image: url(images/puma.jpg);">
+				<div class="item-slick1 item3-slick1" style="background-image: url(images/nike2.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 m-text1 t-center animated visible-false m-b-15" data-appear="rotateInDownLeft">
 							Nueva moda 2018

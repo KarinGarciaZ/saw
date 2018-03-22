@@ -36,16 +36,29 @@
     
       $conexion=new mysqli($host_db,$usuario_db, $pass_db);
       $conexion->set_charset("utf8");   
-      
-      
       mysqli_select_db($conexion, "saw"); 
-      $consulta="INSERT INTO `shopping_cart_details` (`idShoppingCart`, `idProduct`, `quantity`, `cost`) VALUES(".$idCart.",".$_GET['id'].", 1, ".$_GET['cost'].");";
+
+      $quantity = 1;
+      if(@$_GET['quantity'])
+        $quantity = $_GET['quantity'];
+
+      $consulta="SELECT * FROM `shopping_cart_details` WHERE idShoppingCart = ".$idCart." AND statusProduct = 0 AND idProduct = ".$_GET['id'].";";
       $resultados=mysqli_query($conexion,$consulta);
-      if ($resultados){
-        $valores = "SELECT COUNT(*) from shopping_cart_details WHERE idShoppingCart = ".$idCart.";";
-        $lector = mysqli_query($conexion, $valores);
-        $row = mysqli_fetch_array($lector);
-        echo $row[0];
-      }        
-    }
+      $row = mysqli_fetch_array($resultados);
+      if (count($row) > 0){
+        $consulta="UPDATE `shopping_cart_details` SET quantity = quantity + ".$quantity." WHERE idShoppingCart = ".$idCart." AND statusProduct = 0 AND idProduct = ".$_GET['id'].";";
+        $resultados=mysqli_query($conexion,$consulta);
+      }
+      else {
+        $consulta="INSERT INTO `shopping_cart_details` (`idShoppingCart`, `idProduct`, `quantity`, `cost`) VALUES(".$idCart.",".$_GET['id'].",".$quantity.", ".$_GET['cost'].");";
+        $resultados=mysqli_query($conexion,$consulta);
+      }      
+        
+      $total = 0;
+      foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$idCart.'  AND statusProduct = 0;') as $row){          
+        $total = $total + $row['quantity'];
+      }
+      echo $total;
+    }        
+    
 ?>

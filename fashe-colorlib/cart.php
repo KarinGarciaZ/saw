@@ -141,10 +141,11 @@
               <?php
                 if ($lector){
                   $row = mysqli_fetch_array($lector);
-                  $valores = "SELECT COUNT(*) from shopping_cart_details WHERE idShoppingCart = ".$row[0].";";
-                  $lector = mysqli_query($conexion, $valores);
-                  $row = mysqli_fetch_array($lector);
-                  echo $row[0];
+                  $total = 0;
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].' AND statusProduct = 0;') as $row){          
+                    $total = $total + $row['quantity'];
+                  }                  
+                  echo $total;
                 }
                 else
                   echo 0;
@@ -162,7 +163,7 @@
               
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
-                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].';') as $row){    
+                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){    
                   $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
                   $lectore = mysqli_query($conexion, $valores);
                   $productRow = mysqli_fetch_array($lectore);
@@ -173,7 +174,7 @@
 									</div>
 
 									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
+										<a href="product-detail.php?idProduct=<?php echo $row['idProduct'];?>" class="header-cart-item-name">
                     <?php echo $productRow['name']; ?>
 										</a>
 
@@ -414,11 +415,11 @@
 							<th class="column-3">Precio</th>
 							<th class="column-4 p-l-70">Cantidad</th>
               <th class="column-5">Total</th>
-              <th class="column-5">Remover Producto</th>
+              <th class="column-6">Remover Producto</th>
             </tr>
             
             <?php
-              foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].';') as $row){    
+              foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){    
                 $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
                 $lectore = mysqli_query($conexion, $valores);
                 $productRow = mysqli_fetch_array($lectore);
@@ -430,7 +431,10 @@
                 <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG-PRODUCT'>";?> 
 								</div>
 							</td>
-							<td class="column-2"><?php echo $productRow['name']; ?></td>
+							<td class="column-2">
+                <span class="block2-id2" style="opacity: 90;"><?php echo $productRow['id']; ?></span>
+                <?php echo $productRow['name']; ?>
+              </td>
 							<td class="column-3">$<?php echo $row['cost']; ?></td>
 							<td class="column-4">
 								<div class="flex-w bo5 of-hidden w-size17">
@@ -446,8 +450,10 @@
 									</button>
 								</div>
 							</td>
-							<td class="column-5">$<?php echo $row['cost'] * $row['quantity']; }?></td>
-						</tr>
+              <td class="column-5">$<?php echo $row['cost'] * $row['quantity'];?></td>
+              <td class="column-6"><button class="btn btn-danger"><i class="fa fa-close"></i></button></td>
+            </tr>
+            <?php } ?>
 						
 					</table>
 				</div>
@@ -458,9 +464,9 @@
 
 				<div class="size10 trans-0-4 m-t-10 m-b-10">
 					<!-- Button -->
-					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+					<a href="cart.php" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" style="width: 210px;">
 						Actualizar Valores
-					</button>
+					</a>
 				</div>
 			</div>
 
@@ -494,9 +500,17 @@
 
 						<span class="s-text19">
 							Dirección
-						</span>						
+						</span>			
 
-						<div class="size13 bo4 m-b-12">
+            <?php
+            $valor = "SELECT `address` from clients WHERE id = ".$userId.";";
+            $lecto = mysqli_query($conexion, $valor);
+            $rowAddress = mysqli_fetch_array($lecto);
+
+            echo "<p class='s-text8 p-b-23'>".$rowAddress[0]."</p>";
+            ?>				
+
+						<!-- <div class="size13 bo4 m-b-12">
 						<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="calle" placeholder="Calle">
             </div>
             
@@ -506,7 +520,7 @@
 
 						<div class="size13 bo4 m-b-22">
 							<input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="colonia" placeholder="Colonia">
-						</div>
+						</div> -->
 						
 					</div>
 				</div>
@@ -525,7 +539,7 @@
 				<div class="size15 trans-0-4">
 					<!-- Button -->
 					<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-						Proceder a Pagar
+						Generar pedido
 					</button>
 				</div>
       </div>
@@ -593,6 +607,68 @@
 			minimumResultsForSearch: 20,
 			dropdownParent: $('#dropDownSelect2')
 		});
+
+
+    $('.btn-danger').each(function(){
+      var idProduct = $(this).parent().parent().find('.block2-id2').html();  
+      console.log('idProduct: ', idProduct);    
+			$(this).on('click', function(){
+        $(this).closest('tr').remove();
+        removeProduct(idProduct);
+			});
+		});
+
+    function removeProduct(idProduct){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'removeProduct.php?id='+idProduct, true);
+
+      xhr.onload = function(){
+        var span = document.getElementById("itemsCart");
+        span.textContent = this.responseText;
+      }
+
+      xhr.send();
+    }
+
+    $('.btn-num-product-up').each(function(){
+      var idProduct = $(this).parent().parent().parent().find('.block2-id2').html();        
+			$(this).on('click', function(){       
+        addProduct(idProduct);
+			});
+		});
+
+    function addProduct(idProduct){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'getCountCart.php?id='+idProduct, true);
+
+      xhr.onload = function(){
+        var span = document.getElementById("itemsCart");
+        span.textContent = this.responseText;
+      }
+
+      xhr.send();
+    }
+
+    $('.btn-num-product-down').each(function(){
+      var idProduct = $(this).parent().parent().parent().find('.block2-id2').html();        
+			$(this).on('click', function(){       
+        lessProduct(idProduct);
+			});
+		});
+
+    function lessProduct(idProduct){
+      console.log('idProduct: ', idProduct);
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'getCountCart.php?id='+idProduct+'&quantity=-1', true);
+
+      xhr.onload = function(){
+        var span = document.getElementById("itemsCart");
+        span.textContent = this.responseText;
+      }
+
+      xhr.send();
+    }
+    
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>

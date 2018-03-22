@@ -10,7 +10,8 @@
   $idCategory = $_GET['idCategory'];
 
   session_start();
-  $username = $_SESSION['username'];
+	$username = $_SESSION['username'];
+	$arrayMoney;
   ?>
 
 
@@ -44,6 +45,8 @@
 	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/noui/nouislider.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -428,16 +431,24 @@
 							<div class="flex-sb-m flex-w p-t-16">
 								<div class="w-size11">
 									<!-- Button -->
-									<button class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4">
+									<button id="recargado" class="flex-c-m size4 bg7 bo-rad-15 hov1 s-text14 trans-0-4" >
 										Filtrar
 									</button>
 								</div>
+								<?php
+
+										//$cantida = "<div id='dats'class='col-md-12 text-center'></div>";
+										$cantida = "<script> document.getElementById('value-lower') </script>";
+										echo "esto es el valor final".$cantida;
+
+								?>
 
 								<div class="s-text3 p-t-10 p-b-10">
 									Rango: $<span id="value-lower">610</span> - $<span id="value-upper">980</span>
 								</div>
 							</div>
 						</div>
+						<div id='dats'class='col-md-12 text-center'></div>
 
 						<div class="search-product pos-relative bo4 of-hidden">
 							<input class="s-text7 size6 p-l-23 p-r-50" type="text" name="search-product" placeholder="Buscar productos...">
@@ -598,6 +609,8 @@
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/noui/nouislider.min.js"></script>
 	<script type="text/javascript">
+		var datos;
+		var cambia;
 		/*[ No ui ]
 	    ===========================================================*/
 	    var filterBar = document.getElementById('filter-bar');
@@ -610,7 +623,6 @@
 	            'max': 5000
 	        }
 	    });
-
 	    var skipValues = [
 	    document.getElementById('value-lower'),
 	    document.getElementById('value-upper')
@@ -618,8 +630,12 @@
 
 	    filterBar.noUiSlider.on('update', function( values, handle ) {
 	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
+					datos = values;
+					
+					$('#dats').html(datos);
 	    });
 	</script>
+
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 

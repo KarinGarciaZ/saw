@@ -86,11 +86,6 @@
 								<a href="product.php">Productos</a>
 							</li>
 
-							<li class="sale-noti">
-              Categorias
-								<!-- <a href="product.php">Categorias</a> -->
-							</li>
-
 							<li>
 								<a href="cart.php">Carrito</a>
 							</li>

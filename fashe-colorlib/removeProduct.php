@@ -21,7 +21,7 @@
     $resultados=mysqli_query($conexion,$consulta);
   }
   $total = 0;
-  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$idCart.'  AND statusProduct = 0;') as $row){          
+  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].'  AND statusProduct = 0;') as $row){          
     $total = $total + $row['quantity'];
   }
   echo $total;

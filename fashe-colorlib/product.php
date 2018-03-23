@@ -10,7 +10,9 @@
   $idCategory = $_GET['idCategory'];
 
   session_start();
-	$username = $_SESSION['username'];
+  $username = $_SESSION['username'];
+  
+  $userId = $_SESSION['userId'];
 	$arrayMoney;
   ?>
 
@@ -91,14 +93,8 @@
                 <a href="product.php">Productos</a>
               </li>
 
-              <li class="sale-noti">
-              Categorias
-                <!-- <a href="product.php">Categorias</a> -->
-              </li>
-
               <li>
-              Carrito
-                <!-- <a href="cart.php">Carrito</a> -->
+                <a href="cart.php">Carrito</a> 
               </li>
 
               <li>
@@ -129,87 +125,91 @@
               Iniciar sesión
               <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
             </a>
-        <?php } ?>	
+        <?php 
+        } 
+
+          $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+          $lector = mysqli_query($conexion, $valores);
+        ?>		
+                    
 
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
+						<img src="images/icons/icon-header-03.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span id="itemsCart" class="header-icons-noti">
+              <?php
+                if ($lector){
+                  $row = mysqli_fetch_array($lector);
+                  $total = 0;
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){          
+                    $total = $total + $row['quantity'];
+                  }                  
+                  echo $total;
+                }
+                else
+                  echo 0;
+              ?>
+            </span>
 
-						<!-- Header cart noti -->
+            <!-- Header cart noti -->
+            <?php if($username) {
+              $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+              $lector = mysqli_query($conexion, $valores);
+              if ($lector){
+                $total = 0;
+                $row = mysqli_fetch_array($lector);                        
+              ?>
+              
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
+                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){    
+                  $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
+                  $lectore = mysqli_query($conexion, $valores);
+                  $productRow = mysqli_fetch_array($lectore);
+                  ?>
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
+                  <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG'>";?> 
 									</div>
 
 									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+										<a href="product-detail.php?idProduct=<?php echo $row['idProduct'];?>" class="header-cart-item-name">
+                    <?php echo $productRow['name']; ?>
 										</a>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
+                    <?php echo $row['quantity']; ?> x $<?php echo $row['cost']; ?>
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
+                </li>		
+                <?php $total = $total + $row['cost'] * $row['quantity']; }?>						
 							</ul>
 
 							<div class="header-cart-total">
-								Total: $75.00
+								Total: $<?php echo $total;?>		
 							</div>
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
 									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
+										Ver Carro
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
 									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
+										Pagar
 									</a>
 								</div>
 							</div>
-						</div>
+            </div>
+            <?php } }?>
+
 					</div>
+          </div>
 				</div>
 			</div>
 		</div>
@@ -453,9 +453,9 @@
 						<div class="search-product pos-relative bo4 of-hidden">
 							<input class="s-text7 size6 p-l-23 p-r-50" type="text" name="search-product" placeholder="Buscar productos...">
 
-							<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+							<a href="product.php" class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
 								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
-							</button>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -466,9 +466,9 @@
 					<div class="row">
           <?php 
             if($idCategory)
-              $query = "SELECT * from `products` WHERE idCategory = ".$idCategory." ORDER BY RAND() LIMIT 0,12;";             
+              $query = "SELECT * from `products` WHERE idCategory = ".$idCategory." ORDER BY RAND();";             
             else
-              $query = "SELECT * from `products` ORDER BY RAND() LIMIT 0,12;";              
+              $query = "SELECT * from `products` ORDER BY RAND() LIMIT 0,500;";              
             foreach ($conexion->query($query) as $row){ ?> 
 						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
@@ -485,7 +485,7 @@
 										<div class="block2-btn-addcart w-size1 trans-0-4">
                       <!-- Button -->
                       <?php if($username) {?>
-											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+											<button class="block-btn-addcart flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
                         Agregar carrito
                       </button>
                       <?php } else {?>
@@ -500,9 +500,11 @@
                     <?php echo $row['name']; ?>
 									</a>
 
+                  <span>$</span>
 									<span class="block2-price m-text6 p-r-5">
-									  $<?php echo $row['cost']; ?>
-									</span>
+									  <?php echo $row['cost']; ?>
+                  </span>
+                  <span class="block2-id2" style="opacity: 0;"><?php echo $row['id']; ?></span>
 								</div>
 							</div>
             </div>
@@ -512,10 +514,10 @@
 					</div>
 
 					<!-- Pagination -->
-					<div class="pagination flex-m flex-w p-t-26">
+					<!-- <div class="pagination flex-m flex-w p-t-26">
 						<a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
 						<a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -593,10 +595,25 @@
 	<script type="text/javascript">
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+      var idProduct = $(this).parent().parent().parent().find('.block2-id2').html();      
+      var costProduct = $(this).parent().parent().parent().find('.block2-price').html();
 			$(this).on('click', function(){
-				swal(nameProduct, "Agregado al carrito!", "success");
+				swal(nameProduct, "Agregado al carrito!", "success");            
+        loadCart(idProduct, costProduct);
 			});
 		});
+
+    function loadCart(idProduct, costProduct){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'getCountCart.php?id='+idProduct+'&cost='+costProduct, true);
+
+      xhr.onload = function(){
+        var span = document.getElementById("itemsCart");
+        span.textContent = this.responseText;
+      }
+
+      xhr.send();
+    }
 
 		$('.block2-btn-addwishlist').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();

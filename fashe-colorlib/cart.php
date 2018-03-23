@@ -88,11 +88,6 @@
                 <a href="product.php">Productos</a>
               </li>
 
-              <li class="sale-noti">
-              Categorias
-                <!-- <a href="product.php">Categorias</a> -->
-              </li>
-
               <li>              
                 <a href="cart.php">Carrito</a>
               </li>
@@ -432,7 +427,7 @@
 								</div>
 							</td>
 							<td class="column-2">
-                <span class="block2-id2" style="opacity: 90;"><?php echo $productRow['id']; ?></span>
+                <span class="block2-id2" style="opacity: 0;"><?php echo $productRow['id']; ?></span>
                 <?php echo $productRow['name']; ?>
               </td>
 							<td class="column-3">$<?php echo $row['cost']; ?></td>
@@ -441,8 +436,11 @@
 									<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2">
 										<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
                   </button>
+
                   
-                  <?php echo "<input class='size8 m-text18 t-center num-product' type='number' name='num-product1' value='".$row['quantity']."'>"; ?>
+                  
+                  <?php echo "<input class='size8 m-text18 t-center num-product' id='quantities' type='number' name='num-product1' value='".$row['quantity']."'>"; ?>
+
                   <?php $total = $total + $row['cost'] * $row['quantity']; ?>
                   
                   <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2">
@@ -611,7 +609,6 @@
 
     $('.btn-danger').each(function(){
       var idProduct = $(this).parent().parent().find('.block2-id2').html();  
-      console.log('idProduct: ', idProduct);    
 			$(this).on('click', function(){
         $(this).closest('tr').remove();
         removeProduct(idProduct);
@@ -630,6 +627,7 @@
       xhr.send();
     }
 
+    //  ------------AGREGA PRODUCTOS--------------------  
     $('.btn-num-product-up').each(function(){
       var idProduct = $(this).parent().parent().parent().find('.block2-id2').html();        
 			$(this).on('click', function(){       
@@ -649,15 +647,20 @@
       xhr.send();
     }
 
+    //------------QUITA PRODUCTOS------------------------
+
     $('.btn-num-product-down').each(function(){
-      var idProduct = $(this).parent().parent().parent().find('.block2-id2').html();        
-			$(this).on('click', function(){       
-        lessProduct(idProduct);
+      var idProduct = $(this).parent().parent().parent().find('.block2-id2').html();      
+      var quantity = document.getElementById('quantities').value;
+      //var quantity = $(this).parent().find('.quantities').html();  
+			$(this).on('click', function(){     
+        quantity -= 1;
+        if(quantity > 0)
+          lessProduct(idProduct);
 			});
 		});
 
     function lessProduct(idProduct){
-      console.log('idProduct: ', idProduct);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'getCountCart.php?id='+idProduct+'&quantity=-1', true);
 

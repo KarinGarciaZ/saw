@@ -130,7 +130,8 @@
 
           $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
           $lector = mysqli_query($conexion, $valores);
-          $rowC = mysqli_fetch_array($lector);
+          if ($lector)
+            $rowC = mysqli_fetch_array($lector);
         ?>		
                     
 
@@ -141,9 +142,8 @@
 						<span id="itemsCart" class="header-icons-noti">
               <?php
                 if($username and count($rowC) > 0) {
-                  $row = mysqli_fetch_array($lector);
                   $total = 0;
-                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){          
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$rowC[0].';') as $row){          
                     $total = $total + $row['quantity'];
                   }                  
                   echo $total;

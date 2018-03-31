@@ -123,6 +123,8 @@
 
           $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
           $lector = mysqli_query($conexion, $valores);
+          if ($lector)
+            $rowC = mysqli_fetch_array($lector);
         ?>		
                     
 
@@ -132,10 +134,9 @@
 						<img src="images/icons/icon-header-03.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
 						<span id="itemsCart" class="header-icons-noti">
               <?php
-                if ($lector){
-                  $row = mysqli_fetch_array($lector);
+                if ($lector and count($rowC) > 0){
                   $total = 0;
-                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){          
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$rowC[0].';') as $row){          
                     $total = $total + $row['quantity'];
                   }                  
                   echo $total;

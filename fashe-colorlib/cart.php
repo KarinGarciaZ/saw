@@ -125,7 +125,8 @@
 
           $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
           $lector = mysqli_query($conexion, $valores);
-          $rowC = mysqli_fetch_array($lector);
+          if ($lector)
+            $rowC = mysqli_fetch_array($lector);
         ?>		
                     
 
@@ -136,9 +137,8 @@
 						<span id="itemsCart" class="header-icons-noti">
               <?php
                 if($username and count($rowC) > 0) {
-                  $row = mysqli_fetch_array($lector);
                   $total = 0;
-                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$row[0].' AND statusProduct = 0;') as $row){          
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE idShoppingCart = '.$rowC[0].' AND statusProduct = 0;') as $row){          
                     $total = $total + $row['quantity'];
                   }                  
                   echo $total;
@@ -400,6 +400,7 @@
         if ($lector){
           $total = 0;
           $row = mysqli_fetch_array($lector); 
+          $idCart = $row[0];
           ?>
 
 			<!-- Cart item -->
@@ -537,10 +538,9 @@
 				</div>
 
 				<div class="size15 trans-0-4">
+
 					<!-- Button -->
-					<a href="payment.php" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-						Generar pedido
-					</a>
+					<?php echo "<a href='payment.php?idCart=".$idCart."' class='flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4'>Generar pedido</a>";?>
 				</div>
       </div>
       <?php } 

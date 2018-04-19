@@ -28,8 +28,12 @@
         $total = $total + $rowProducts['cost'] * $rowProducts['quantity']; 
       }		
 
+      
+      date_default_timezone_set('America/Monterrey');
+      $date = date('Y-m-d', time());
+
       $total;
-      $consulta="INSERT INTO `sales` (`idShoppingCart`, `date`, `total`, `status`) VALUES(".$idShoppingCart.",'01-01-2018',".$total.", 0);";
+      $consulta="INSERT INTO `sales` (`idShoppingCart`, `date`, `total`, `status`) VALUES(".$idShoppingCart.",'".$date."',".$total.", 0);";
       $resultados=mysqli_query($conexion,$consulta);
 
       if($resultados){

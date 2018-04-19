@@ -18,8 +18,10 @@
     $row = mysqli_fetch_array($lector);
     if(count($row) > 0)           
       saveProduct($row[0]);      
-    else {
-      $consulta="INSERT INTO `shopping_cart` (`idClient`, `fecha`, `statusCart`) VALUES(".$userId.",'01-01-2018', 0);";
+    else {      
+      date_default_timezone_set('America/Monterrey');
+      $date = date('Y-m-d', time());
+      $consulta="INSERT INTO `shopping_cart` (`idClient`, `fecha`, `statusCart`) VALUES(".$userId.",'".$date."', 0);";
       $resultados=mysqli_query($conexion,$consulta);
       $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
       $lector = mysqli_query($conexion, $valores);

@@ -498,48 +498,58 @@
 						
 					</table>
 				</div>
-      </div>     			
+      </div>     	
 
-			<!-- Total -->
-			<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
-				<h5 class="m-text20 p-b-24">
-					Cuenta del pedido
-				</h5>
+      <div class="row">
+        <div class="col-8 text-center">
+          
+          <a href="reportes/generate/salesReport.php" class="btn btn-danger" style="margin-top: 150px">Generar PDF del pedido</a>
+        </div>
+        <div class="col-4">
+          <!-- Total -->
+          <div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
+            <h5 class="m-text20 p-b-24">
+              Cuenta del pedido
+            </h5>
 
-				<!--  -->
-				<div class="flex-w flex-sb-m p-b-12">
-					<span class="s-text18 w-size19 w-full-sm">
-						Subtotal:
-					</span>
+            <!--  -->
+            <div class="flex-w flex-sb-m p-b-12">
+              <span class="s-text18 w-size19 w-full-sm">
+                Subtotal:
+              </span>
 
-					<span class="m-text21 w-size20 w-full-sm">
-						$<?php echo $total * .84;?>	
-					</span>
-				</div>
+              <span class="m-text21 w-size20 w-full-sm">
+                $<?php echo $total * .84;?>	
+              </span>
+            </div>
 
-        <div class="flex-w flex-sb-m p-b-12">
-					<span class="s-text18 w-size19 w-full-sm">
-						IVA:
-					</span>
+            <div class="flex-w flex-sb-m p-b-12">
+              <span class="s-text18 w-size19 w-full-sm">
+                IVA:
+              </span>
 
-					<span class="m-text21 w-size20 w-full-sm">
-						$<?php echo $total * .16;?>	
-					</span>
-				</div>
+              <span class="m-text21 w-size20 w-full-sm">
+                $<?php echo $total * .16;?>	
+              </span>
+            </div>
 
-        <hr>
+            <hr>
 
-				<!--  -->
-				<div class="flex-w flex-sb-m p-t-26 p-b-30">
-					<span class="m-text22 w-size19 w-full-sm">
-						Total:
-					</span>
+            <!--  -->
+            <div class="flex-w flex-sb-m p-t-26 p-b-30">
+              <span class="m-text22 w-size19 w-full-sm">
+                Total:
+              </span>
 
-					<span class="m-text21 w-size20 w-full-sm">
-						$<?php echo $total;?>	
-					</span>
-				</div>
-      </div>
+              <span class="m-text21 w-size20 w-full-sm">
+                $<?php echo $total;?>	
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>		
+
+			
       <?php  }?>
 		</div>
 	</section>

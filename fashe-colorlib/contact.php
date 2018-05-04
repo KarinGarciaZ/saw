@@ -1,3 +1,20 @@
+<?php
+  
+  $host_db="localhost";
+  $usuario_db="root";
+  $pass_db="Bankai123";
+  $db="saw";
+
+  $conexion=new mysqli($host_db,$usuario_db, $pass_db);
+  $conexion->set_charset("utf8");    
+
+  mysqli_select_db($conexion, "saw");  
+  session_start();
+  $username = $_SESSION['username'];
+  $userId = $_SESSION['userId'];
+  $idCart = 0;
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,127 +89,133 @@
 
 				<!-- Menu -->
 				<div class="wrap_menu">
-					<nav class="menu">
-						<ul class="main_menu">
-							<li>
-								<a href="index.php">Inicio</a>
-							</li>
+        <nav class="menu">
+          <ul class="main_menu">
+            <li>
+              <a href="index.php">Inicio</a>
+            </li>
 
-							<li>
-								<a href="product.php">Productos</a>
-							</li>
+            <li>
+              <a href="product.php">Productos</a>
+            </li>
 
-							<li class="sale-noti">
-								<a href="product.php">Categorias</a>
-							</li>
-
-							<li>
-								<a href="cart.php">Carrito</a>
-							</li>
-
-							<li>
-								<a href="blog.html">Blog</a>
-							</li>
-
-							<li>
-								<a href="about.html">Sobre nosotros</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contactanos</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
+            <li>
+              <a href="cart.php">Carrito</a>
+            </li>
+            
+            <li>
+              <a href="contact.php">Contactanos</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
-						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-					</a>
+        <?php
+          if($username){
+            echo "<a href='' class='header-wrapicon1 dis-block'>$username<img src='images/icons/icon-header-01.png' class='header-icon1' alt='ICON'></a>";
+          }
+          else {?>
+            <a href="signin.php" class="header-wrapicon1 dis-block">
+              Crear cuenta | 
+            </a>
+
+            <a href="login.php" class="header-wrapicon1 dis-block">
+              Iniciar sesión
+              <img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+            </a>
+        <?php 
+        } 
+
+          $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+          $lector = mysqli_query($conexion, $valores);
+          if ($lector)
+            $rowC = mysqli_fetch_array($lector);
+        ?>		
+                    
 
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
-						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-						<span class="header-icons-noti">0</span>
+						<img src="images/icons/icon-header-03.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span id="itemsCart" class="header-icons-noti">
+              <?php
+                if($username and count($rowC) > 0) {
+                  $total = 0;
+                  foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$rowC[0].';') as $row){          
+                    $total = $total + $row['quantity'];
+                  }                  
+                  echo $total;
+                }
+                else
+                  echo 0;
+              ?>
+            </span>
 
-						<!-- Header cart noti -->
+            <!-- Header cart noti -->
+            <?php if($username and count($rowC) > 0) {
+              $valores = "SELECT * from shopping_cart WHERE statusCart = 0 AND idClient = ".$userId.";";
+              $lector = mysqli_query($conexion, $valores);
+              if ($lector){
+                $total = 0;
+                $row = mysqli_fetch_array($lector);                        
+              ?>
+              
 						<div class="header-cart header-dropdown">
 							<ul class="header-cart-wrapitem">
+                <?php foreach ($conexion->query('SELECT * from shopping_cart_details WHERE statusProduct = 0 AND idShoppingCart = '.$row[0].';') as $row){    
+                  $valores = "SELECT * from products WHERE id = ".$row['idProduct'].";";
+                  $lectore = mysqli_query($conexion, $valores);
+                  $productRow = mysqli_fetch_array($lectore);
+                  ?>
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-										<img src="images/item-cart-01.jpg" alt="IMG">
+                  <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG'>";?> 
 									</div>
 
 									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
+										<a href="product-detail.php?idProduct=<?php echo $row['idProduct'];?>" class="header-cart-item-name">
+                    <?php echo $productRow['name']; ?>
 										</a>
 
 										<span class="header-cart-item-info">
-											1 x $19.00
+                    <?php echo $row['quantity']; ?> x $<?php echo $row['cost']; ?>
 										</span>
 									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
+                </li>		
+                <?php $total = $total + $row['cost'] * $row['quantity']; }?>						
 							</ul>
 
 							<div class="header-cart-total">
-								Total: $75.00
+								Total: $<?php echo $total;?>		
 							</div>
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
 									<a href="cart.php" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										View Cart
+										Ver Carro
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
 									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-										Check Out
+										Pagar
 									</a>
 								</div>
 							</div>
-						</div>
+            </div>
+            <?php } }?>
+
 					</div>
+          </div>
+
 				</div>
 			</div>
 		</div>
+
 
 		<!-- Header Mobile -->
 		<div class="wrap_header_mobile">
@@ -374,7 +397,7 @@
 	<!-- Title Page -->
 	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-06.jpg);">
 		<h2 class="l-text2 t-center">
-			Contact
+			
 		</h2>
 	</section>
 
@@ -391,22 +414,22 @@
 				<div class="col-md-6 p-b-30">
 					<form class="leave-comment">
 						<h4 class="m-text26 p-b-36 p-t-15">
-							Send us your message
+							Mandanos un mensaje
 						</h4>
 
 						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" placeholder="Full Name">
+							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" placeholder="Nombre">
 						</div>
 
 						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Phone Number">
+							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Teléfono">
 						</div>
 
 						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="email" placeholder="Email Address">
+							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="email" placeholder="Email">
 						</div>
 
-						<textarea class="dis-block s-text7 size20 bo4 p-l-22 p-r-22 p-t-13 m-b-20" name="message" placeholder="Message"></textarea>
+						<textarea class="dis-block s-text7 size20 bo4 p-l-22 p-r-22 p-t-13 m-b-20" name="message" placeholder="Mensaje"></textarea>
 
 						<div class="w-size25">
 							<!-- Button -->

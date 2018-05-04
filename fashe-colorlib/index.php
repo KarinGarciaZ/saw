@@ -94,16 +94,10 @@
 
 							<li>
 								<a href="cart.php">Carrito</a>
-							</li>
-
+              </li>
+              
 							<li>
-              Sobre nosotros
-								<!-- <a href="about.html">Sobre nosotros</a> -->
-							</li>
-
-							<li>
-              Contactanos
-								<!-- <a href="contact.html">Contactanos</a> -->
+							  <a href="contact.php">Contactanos</a>
 							</li>
 						</ul>
 					</nav>

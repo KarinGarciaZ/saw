@@ -83,32 +83,26 @@
 
 				<!-- Menu -->
 				<div class="wrap_menu">
-          <nav class="menu">
-            <ul class="main_menu">
-              <li>
-                <a href="index.php">Inicio</a>
-              </li>
+        <nav class="menu">
+          <ul class="main_menu">
+            <li>
+              <a href="index.php">Inicio</a>
+            </li>
 
-              <li>
-                <a href="product.php">Productos</a>
-              </li>
+            <li>
+              <a href="product.php">Productos</a>
+            </li>
 
-              <li>
-                <a href="cart.php">Carrito</a> 
-              </li>
-
-              <li>
-              Sobre nosotros
-                <!-- <a href="about.html">Sobre nosotros</a> -->
-              </li>
-
-              <li>
-              Contactanos
-                <!-- <a href="contact.html">Contactanos</a> -->
-              </li>
-            </ul>
-          </nav>
-        </div>
+            <li>
+              <a href="cart.php">Carrito</a>
+            </li>
+            
+            <li>
+              <a href="contact.php">Contactanos</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
 				<!-- Header Icon -->
 				<div class="header-icons">

@@ -1,12 +1,5 @@
 <?php  
-  $host_db="localhost";
-  $usuario_db="root";
-  $pass_db="Bankai123";
-  $db="saw";
-
-  $conexion=new mysqli($host_db,$usuario_db, $pass_db);
-  $conexion->set_charset("utf8"); 
-  mysqli_select_db($conexion, "saw");  
+  include('conexion.php');  
   $idProduct = $_GET['idProduct'];
   session_start();
   $username = $_SESSION['username'];
@@ -158,7 +151,7 @@
                   ?>
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-                  <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG'>";?> 
+                  <?php echo "<img src='images/".$productRow['image']."' alt='IMG'>";?> 
 									</div>
 
 									<div class="header-cart-item-txt">
@@ -393,7 +386,7 @@
 					<div class="wrap-slick3-dots"></div>
 
 					<div class="wrap-pic-w">
-            <?php echo "<img src='../../saw-admin/images/products/product-details/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/product-details/".$row['image']."' alt='IMG-PRODUCT'>";?> 
           </div>
 				</div>
 			</div>
@@ -477,7 +470,7 @@
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-              <?php echo "<img src='../../saw-admin/images/products/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+              <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 								<div class="block2-overlay trans-0-4">
 									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">

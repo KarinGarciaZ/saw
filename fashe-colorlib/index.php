@@ -1,14 +1,5 @@
 <?php
-  
-  $host_db="localhost";
-  $usuario_db="root";
-  $pass_db="Bankai123";
-  $db="saw";
-
-  $conexion=new mysqli($host_db,$usuario_db, $pass_db);
-  $conexion->set_charset("utf8");    
-
-  mysqli_select_db($conexion, "saw");  
+  include('conexion.php');   
   session_start();
   $username = $_SESSION['username'];
   $userId = $_SESSION['userId'];
@@ -164,7 +155,7 @@
                   ?>
 								<li class="header-cart-item">
 									<div class="header-cart-item-img">
-                  <?php echo "<img src='../../saw-admin/images/products/".$productRow['image']."' alt='IMG'>";?> 
+                  <?php echo "<img src='images/".$productRow['image']."' alt='IMG'>";?> 
 									</div>
 
 									<div class="header-cart-item-txt">
@@ -471,7 +462,7 @@
           <!-- block1 -->
           <?php $row = mysqli_fetch_array($lecto) ?>
 					<div class="block1 hov-img-zoom pos-relative m-b-30">
-            <?php echo "<img src='../../saw-admin/images/categories/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
@@ -484,7 +475,7 @@
 					<!-- block1 -->
 					<?php $row = mysqli_fetch_array($lecto) ?>
 					<div class="block1 hov-img-zoom pos-relative m-b-30">
-            <?php echo "<img src='../../saw-admin/images/categories/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
@@ -499,7 +490,7 @@
           <!-- block1 -->
           <?php $row = mysqli_fetch_array($lecto) ?>
 					<div class="block1 hov-img-zoom pos-relative m-b-30">
-            <?php echo "<img src='../../saw-admin/images/categories/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
@@ -512,7 +503,7 @@
 					<!-- block1 -->
 					<?php $row = mysqli_fetch_array($lecto) ?>
 					<div class="block1 hov-img-zoom pos-relative m-b-30">
-            <?php echo "<img src='../../saw-admin/images/categories/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
@@ -527,7 +518,7 @@
           <!-- block1 -->
           <?php $row = mysqli_fetch_array($lecto) ?>
 					<div class="block1 hov-img-zoom pos-relative m-b-30">
-            <?php echo "<img src='../../saw-admin/images/categories/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
@@ -540,7 +531,7 @@
 					<!-- block1 -->
 					<?php $row = mysqli_fetch_array($lecto) ?>
 					<div class="block1 hov-img-zoom pos-relative m-b-30">
-            <?php echo "<img src='../../saw-admin/images/categories/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+            <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 						<div class="block1-wrapbtn w-size2">
 							<!-- Button -->
@@ -574,7 +565,7 @@
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-              <?php echo "<img src='../../saw-admin/images/products/".$row['image']."' alt='IMG-PRODUCT'>";?> 
+              <?php echo "<img src='images/".$row['image']."' alt='IMG-PRODUCT'>";?> 
 
 								<div class="block2-overlay trans-0-4">
 									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">

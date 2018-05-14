@@ -1,13 +1,5 @@
 <?php  
-  $host_db="localhost";
-  $usuario_db="root";
-  $pass_db="Bankai123";
-  $db="saw";
-
-  $conexion=new mysqli($host_db,$usuario_db, $pass_db);
-  $conexion->set_charset("utf8");    
-
-  mysqli_select_db($conexion, "saw");   
+include('conexion.php');   
   
   session_destroy();
   if (@$_POST['email'] && $_POST['pass1']) {
